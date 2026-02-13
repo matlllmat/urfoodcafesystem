@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(copy:*)",
+      "Bash(grep:*)",
+      "Bash(dir:*)",
+      "Bash(del \"c:\\\\xampp\\\\htdocs\\\\urfoodhubcafesystem\\\\plan.md\")",
+      "Bash(del \"c:\\\\xampp\\\\htdocs\\\\urfoodhubcafesystem\\\\config\\\\create_sales_tables.sql\")",
+      "Bash(php:*)",
+      "Bash(c:/xampp/php/php.exe:*)"
+    ]
+  }
+}

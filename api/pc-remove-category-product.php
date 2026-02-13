@@ -1,0 +1,50 @@
+<?php
+session_start();
+require_once __DIR__ . '/../config/db.php';
+
+header('Content-Type: application/json');
+
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(['success' => false, 'message' => 'Unauthorized']);
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode(['success' => false, 'message' => 'Invalid request method']);
+    exit;
+}
+
+$input = json_decode(file_get_contents('php://input'), true);
+if (!$input) {
+    echo json_encode(['success' => false, 'message' => 'Invalid JSON input']);
+    exit;
+}
+
+$category_id = isset($input['category_id']) ? trim($input['category_id']) : '';
+$product_id = isset($input['product_id']) ? trim($input['product_id']) : '';
+
+if (empty($category_id) || empty($product_id)) {
+    echo json_encode(['success' => false, 'message' => 'Category ID and Product ID are required']);
+    exit;
+}
+
+$stmt = $conn->prepare("DELETE FROM product_category_map WHERE product_id = ? AND category_id = ?");
+if (!$stmt) {
+    echo json_encode(['success' => false, 'message' => 'Query error: ' . $conn->error]);
+    exit;
+}
+$stmt->bind_param("ss", $product_id, $category_id);
+
+if ($stmt->execute()) {
+    if ($stmt->affected_rows > 0) {
+        echo json_encode(['success' => true, 'message' => 'Product removed from category']);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Product was not in this category']);
+    }
+} else {
+    echo json_encode(['success' => false, 'message' => 'Failed to remove product: ' . $stmt->error]);
+}
+
+$stmt->close();
+$conn->close();
+?>
