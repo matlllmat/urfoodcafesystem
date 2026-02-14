@@ -494,6 +494,12 @@ function openVoidModal(saleId) {
     voidTargetSaleId = saleId;
     document.getElementById('voidSaleIdLabel').textContent = saleId;
 
+    // Default selection: keep as lost (no restore)
+    const lostOption = document.getElementById('voidInventoryLost');
+    if (lostOption) {
+        lostOption.checked = true;
+    }
+
     const btn = document.getElementById('confirmVoidBtn');
     btn.disabled = false;
     btn.textContent = 'Void Sale';
@@ -509,6 +515,9 @@ function closeVoidModal() {
 function confirmVoidSale() {
     if (!voidTargetSaleId) return;
 
+    const selectedActionEl = document.querySelector('input[name="voidInventoryAction"]:checked');
+    const inventory_action = selectedActionEl ? selectedActionEl.value : 'lost';
+
     const btn = document.getElementById('confirmVoidBtn');
     btn.disabled = true;
     btn.textContent = 'Voiding...';
@@ -516,7 +525,10 @@ function confirmVoidSale() {
     fetch('../api/sh-void-sale.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sale_id: voidTargetSaleId })
+        body: JSON.stringify({
+            sale_id: voidTargetSaleId,
+            inventory_action
+        })
     })
         .then(res => {
             if (!res.ok) {

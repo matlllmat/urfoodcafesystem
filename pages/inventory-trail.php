@@ -11,7 +11,7 @@ require_once __DIR__ . '/../config/db.php';
     </div>
 
     <!-- Stats Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <!-- Total Movements -->
         <div class="bg-white rounded-lg border border-gray-200 p-4">
             <div class="flex items-start justify-between">
@@ -60,20 +60,6 @@ require_once __DIR__ . '/../config/db.php';
             </div>
         </div>
 
-        <!-- Net Value Impact -->
-        <div class="bg-white rounded-lg border border-gray-200 p-4">
-            <div class="flex items-start justify-between gap-2">
-                <div class="min-w-0">
-                    <p class="text-label text-gray-500 mb-1">Net Value Impact</p>
-                    <h3 class="text-title text-2xl" id="statNetValue">-</h3>
-                </div>
-                <div class="bg-gray-100 p-2 rounded flex-shrink-0" id="statNetValueIcon">
-                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
-                    </svg>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Filters and Actions -->

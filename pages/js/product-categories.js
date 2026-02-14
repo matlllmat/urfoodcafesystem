@@ -356,8 +356,9 @@ function escapeHtml(str) {
     return div.innerHTML;
 }
 
-// Event delegation: Products column button (avoids "openCategoryProductsModal is not defined" when script load order differs)
-document.addEventListener('DOMContentLoaded', function () {
+// Event delegation: Products column button
+// Bind immediately so it still works in deployments where optimizers alter script timing.
+if (!window.__pcProductsDelegationBound) {
     document.addEventListener('click', function (e) {
         const btn = e.target.closest('button[data-category-products]');
         if (!btn) return;
@@ -367,7 +368,8 @@ document.addEventListener('DOMContentLoaded', function () {
             openCategoryProductsModal(categoryId, categoryName);
         }
     });
-});
+    window.__pcProductsDelegationBound = true;
+}
 
 // ESC key handler
 document.addEventListener('keydown', function (e) {

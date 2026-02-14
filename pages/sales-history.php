@@ -242,8 +242,40 @@ require_once __DIR__ . '/../config/db.php';
                 Are you sure you want to void sale <span id="voidSaleIdLabel" class="font-semibold"></span>?
             </p>
             <p class="text-label text-center text-gray-400 mb-6">
-                This action cannot be undone. The sale will be marked as voided but inventory will not be restored.
+                This action cannot be undone. Choose how used inventory should be handled.
             </p>
+
+            <!-- Inventory Handling Choice -->
+            <div class="mb-6 space-y-2">
+                <p class="text-label text-gray-500 uppercase">Inventory after void</p>
+
+                <label class="flex items-start gap-3 p-3 border border-gray-200 rounded-md hover:bg-gray-50 cursor-pointer">
+                    <input
+                        type="radio"
+                        name="voidInventoryAction"
+                        value="lost"
+                        id="voidInventoryLost"
+                        class="mt-1"
+                        checked />
+                    <div>
+                        <p class="text-regular text-gray-800">Mark as lost</p>
+                        <p class="text-xs text-gray-500">Do not return inventory to stock.</p>
+                    </div>
+                </label>
+
+                <label class="flex items-start gap-3 p-3 border border-gray-200 rounded-md hover:bg-gray-50 cursor-pointer">
+                    <input
+                        type="radio"
+                        name="voidInventoryAction"
+                        value="restore"
+                        id="voidInventoryRestore"
+                        class="mt-1" />
+                    <div>
+                        <p class="text-regular text-gray-800">Return to inventory</p>
+                        <p class="text-xs text-gray-500">Restore deducted quantities back to their original batches.</p>
+                    </div>
+                </label>
+            </div>
 
             <!-- Action Buttons -->
             <div class="flex gap-3">

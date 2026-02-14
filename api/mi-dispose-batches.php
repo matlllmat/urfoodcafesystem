@@ -103,6 +103,8 @@ try {
         $old_quantity = $batch['current_quantity'];
         $unit_cost = $batch['initial_quantity'] > 0 ? ($batch['total_cost'] / $batch['initial_quantity']) : 0;
         $value_lost = ($old_quantity / $batch['initial_quantity']) * $batch['total_cost'];
+        // Outbound movement values should be negative for correct net value impact stats
+        $movement_total_value = -abs($value_lost);
         
         // Generate movement ID
         $movement_id = 'MV-' . date('Ymd') . '-' . strtoupper(substr(uniqid(), -6));
@@ -138,7 +140,7 @@ try {
             $negative_quantity,
             $old_quantity,
             $unit_cost,
-            $value_lost,
+            $movement_total_value,
             $staff_id,
             $reason
         );

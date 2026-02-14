@@ -164,6 +164,10 @@ if ($items_result) {
 $stats_query = "
     SELECT 
         COUNT(DISTINCT ii.item_id) as total_items,
+        COUNT(DISTINCT CASE 
+            WHEN COALESCE(batch_totals.available_qty, 0) > 0
+            THEN ii.item_id
+        END) as total_available_items,
         COALESCE(SUM(
             CASE 
                 WHEN ib.expiration_date IS NULL OR ib.expiration_date > CURDATE()
@@ -199,6 +203,7 @@ $stats_query = "
 $stats_result = $conn->query($stats_query);
 $stats = $stats_result ? $stats_result->fetch_assoc() : [
     'total_items' => 0,
+    'total_available_items' => 0,
     'total_inventory_value' => 0,
     'low_stock_count' => 0,
     'out_of_stock_count' => 0
@@ -293,7 +298,7 @@ if ($view_mode === 'flat') {
             <div class="flex items-start justify-between">
                 <div>
                     <p class="text-label text-gray-500 mb-1">Total Available Items</p>
-                    <h3 class="text-title text-2xl text-gray-800"><?php echo $stats['total_items']; ?></h3>
+                    <h3 class="text-title text-2xl text-gray-800"><?php echo $stats['total_available_items']; ?></h3>
                 </div>
                 <div class="bg-green-100 p-2 rounded">
                     <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

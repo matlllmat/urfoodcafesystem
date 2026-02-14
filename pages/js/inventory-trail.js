@@ -123,24 +123,6 @@ function updateTrailStats(stats) {
         '\u20B1 ' + parseFloat(stats.total_outbound_value).toLocaleString('en-PH', { minimumFractionDigits: 2 });
     document.getElementById('statOutboundCount').textContent =
         stats.outbound_count + ' outbound movement' + (parseInt(stats.outbound_count) !== 1 ? 's' : '');
-
-    // Net value
-    const netValue = parseFloat(stats.net_value);
-    const netValueEl = document.getElementById('statNetValue');
-    const netValueIcon = document.getElementById('statNetValueIcon');
-    const prefix = netValue >= 0 ? '+' : '-';
-    netValueEl.textContent = prefix + '\u20B1 ' + Math.abs(netValue).toLocaleString('en-PH', { minimumFractionDigits: 2 });
-    netValueEl.classList.remove('text-success', 'text-danger', 'text-gray-800');
-    netValueEl.classList.add(netValue >= 0 ? 'text-success' : 'text-danger');
-
-    // Update icon color
-    netValueIcon.classList.remove('bg-green-100', 'bg-red-100', 'bg-gray-100');
-    netValueIcon.classList.add(netValue >= 0 ? 'bg-green-100' : 'bg-red-100');
-    const iconSvg = netValueIcon.querySelector('svg');
-    if (iconSvg) {
-        iconSvg.classList.remove('text-green-600', 'text-danger', 'text-gray-600');
-        iconSvg.classList.add(netValue >= 0 ? 'text-green-600' : 'text-danger');
-    }
 }
 
 // ==================== RENDER TABLE ====================
